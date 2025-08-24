@@ -114,7 +114,7 @@
 
         /* Footer Styling */
         footer.footer {
-            padding: 15px 30px;
+            padding: 0px 30px;
             background-color: #1e293b;
             color: #fff;
             text-align: center;
@@ -147,8 +147,8 @@
     <!-- Header -->
     <header>
         <div class="header-bar">
-            <h2>Welcome to Track Route</h2>
-            <div class="user-info d-flex align-items-center">
+            <h2 style="color:wheat">Welcome to Track Route</h2>
+            <div class="user-info d-flex align-items-center" style="color:wheat">
                 <span>User: <strong>@User.Identity.Name</strong></span>
                 <a class="btn btn-danger btn-sm" asp-controller="ManageUser" asp-action="Logout">Logout</a>
             </div>
@@ -167,7 +167,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link @(currentController == "PlanRoute" ? "active" : "")"
-                       asp-controller="PlanRoute" asp-action="Index">Plan Route</a>
+                       asp-controller="PlanRoute" asp-action="RouteDetails">Plan Route</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @(currentController == "ManageTrucks" ? "active" : "")"

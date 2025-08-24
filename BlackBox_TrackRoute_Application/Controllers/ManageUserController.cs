@@ -37,7 +37,7 @@ namespace BlackBox_TrackRoute_Application.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle);
 
-                return RedirectToAction("Index", "PlanRoute");
+                return RedirectToAction("RouteDetails", "PlanRoute");
             }
             ModelState.AddModelError("", "Invalid credentials");
             return View(model);

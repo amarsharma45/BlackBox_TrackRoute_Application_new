@@ -28,11 +28,15 @@ builder.Services.AddControllersWithViews(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IManageLoad, ManageLoad>();
 builder.Services.AddScoped<IManageTruck, ManageTruck>();
+builder.Services.AddScoped<IManageRoute, ManageRoute>();
 
 // Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IManageLoadService, ManageLoadService>();
 builder.Services.AddScoped<ITruckService, TruckService>();
+builder.Services.AddScoped<IRouteService, RouteService>();
+
+
 
 
 // Add MVC and Razor Pages
