@@ -1,0 +1,190 @@
+﻿@model List<LoadsDetailsViewModel>
+
+<style>
+    h2 {
+        font-family: Arial, sans-serif;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        margin-top: 20px !important;
+    }
+
+    thead {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    /* Icon styles for edit and delete */
+    .icon-button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        margin-right: 8px;
+    }
+
+    .edit-icon {
+        color: #28a745; /* green */
+    }
+
+    .delete-icon {
+        color: #dc3545; /* red */
+    }
+</style>
+
+
+
+<h2>Manage Load</h2>
+<hr />
+<a class="add-load-button"><b>+ Add New Load</b></a>
+<div style="max-height: 480px !important; overflow-y: scroll;">
+<table>
+    <thead>
+        <tr>
+                <th>Sr. No.</th>
+            <th>Load Name</th>
+            <th>Pickup Location</th>
+            <th>Destination Location</th>
+            <th>Weight</th>
+            <th>Unit Name</th>
+            <th>Description</th>
+            <th>Created By</th>
+            <th>Created Date</th>
+            <th>Actions</th> 
+        </tr>
+    </thead>
+    <tbody>
+            @{
+                int sr = 1;
+            }
+        @foreach (var load in Model)
+        {
+            <tr>
+                    <th>@sr</th>
+                <td>@load.LoadName</td>
+                <td>@load.PickupLocation</td>
+                <td>@load.DestinationLocation</td>
+                <td>@load.Weight</td>
+                <td>@load.UnitName</td>
+                <td>@load.Description</td>
+                <td>@load.CreatedBy</td>
+                <td>@load.CreatedDate.ToString("dd MMM yyyy")</td>
+                <td>
+                    <a href="javascript:void(0);"
+                       class="icon-button edit-icon edit-load"
+                       data-id="@load.LoadId" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@load.LoadId" title="Delete" class="icon-button delete-icon"
+                       onclick="return confirm('Are you sure you want to delete this load?');">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+                sr++;
+               
+        }
+    </tbody>
+</table>
+</div>
+<div class="modal fade" id="editLoadModal" tabindex="-1" aria-labelledby="editLoadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editLoadModalLabel">Edit Load</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="editLoadModalContent">
+                <!-- Partial view content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+      $(document).ready(function () {
+        // Add Button
+        $('.add-load-button').click(function () {
+            var loadId = 0;
+            $("#editLoadModalLabel").text("Create Load");
+
+            openFormModal(
+                '@Url.Action("CreateLoad")',   // ✅ fixed closing
+                '@Url.Action("AddOrUpdateLoad")',
+                '#editLoadModal',
+                '#editLoadModalContent',
+                '#editLoadForm'
+            );
+        });
+
+        // Edit Button
+        $('.edit-load').click(function () {
+            var loadId = $(this).data('id');
+            $("#editLoadModalLabel").text("Update Load");
+
+            openFormModal(
+                '@Url.Action("EditLoad")' + '?id=' + loadId,
+                '@Url.Action("AddOrUpdateLoad")',
+                '#editLoadModal',
+                '#editLoadModalContent',
+                '#editLoadForm'
+            );
+        });
+    });
+
+    function openFormModal(getUrl, postUrl, modalId, contentId, formId, onSuccess) {
+        $.ajax({
+            url: getUrl,
+            type: 'GET',
+            success: function (response) {
+                $(contentId).html(response);
+
+                var myModal = new bootstrap.Modal(document.querySelector(modalId), {});
+                myModal.show();
+
+                // Attach submit handler
+                $(formId).off("submit").on("submit", function (event) {
+                    event.preventDefault();
+                    var form = $(this);
+
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: form.serialize(),
+                        success: function (result) {
+                            if (result.success) {
+                                myModal.hide();
+
+                                if (typeof onSuccess === "function") {
+                                    onSuccess(result);
+                                } else {
+                                    location.reload(); // fallback reload
+                                }
+                            } else {
+                                $(contentId).html(result); // Show validation errors
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+</script>
+

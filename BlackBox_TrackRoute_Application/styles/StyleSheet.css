@@ -1,0 +1,49 @@
+﻿
+h2 {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-top: 20px !important;
+}
+
+thead {
+    background-color: #007BFF;
+    color: white;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+/* Icon styles for edit and delete */
+.icon-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.edit-icon {
+    color: #28a745; /* green */
+}
+
+.delete-icon {
+    color: #dc3545; /* red */
+}
+
+

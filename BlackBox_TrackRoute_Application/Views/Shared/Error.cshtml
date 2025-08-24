@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Something went wrong";
+    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    var showDetails = env == "Development"; // show detailed errors only in development
+    Layout = null; // This disables the layout
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            text-align: center;
+        }
+
+            .error-container h1 {
+                font-size: 6rem;
+                font-weight: bold;
+                color: #dc3545;
+            }
+
+            .error-container h3 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+                color: #343a40;
+            }
+
+            .error-container p {
+                font-size: 1.2rem;
+                color: #6c757d;
+            }
+
+        .btn-home {
+            margin-top: 20px;
+        }
+
+        .exception-details {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Oops!</h1>
+        <h3>Something went wrong.</h3>
+        <p>We’re sorry for the inconvenience. Please try again later or contact support.</p>
+        <a href="~/" class="btn btn-primary btn-home">Go to Home</a>
+
+        @if (showDetails && ViewData["Exception"] != null)
+        {
+            <div class="exception-details">
+                <strong>Exception:</strong>
+                <pre>@ViewData["Exception"]</pre>
+            </div>
+        }
+    </div>
+</body>
+</html>
