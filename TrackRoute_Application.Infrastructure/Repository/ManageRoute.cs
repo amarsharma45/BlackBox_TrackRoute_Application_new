@@ -80,5 +80,12 @@ namespace TrackRoute_Application.Infrastructure.Repository
               new SqlParameter("@TruckId", mappingData.TruckId)
               );
         }
+
+        public List<RouteData_dto> GetDetailedRouteData()
+        {
+            var detailedRouteData = _context.Database.SqlQueryRaw<RouteData_dto>(
+            "EXEC usp_getRouteData").AsEnumerable().ToList();
+            return detailedRouteData;
+        }
     }
 }

@@ -54,5 +54,10 @@ namespace TrackRoute_Application.Services.Implementation
         {
             _manageRoute.AddRoute_LoadMapping(mappingData);
         }
+
+        public List<RouteData_dto> GetDetailedRouteData()
+        {
+            return _manageRoute.GetDetailedRouteData();
+        }
     }
 }

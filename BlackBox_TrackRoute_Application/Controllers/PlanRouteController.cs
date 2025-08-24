@@ -141,6 +141,42 @@ namespace BlackBox_TrackRoute_Application.Controllers
                 return Json(new { success = false, message = "Failed to save mapping: " + ex.Message });
             }
         }
-        
+
+        public IActionResult RetrievalDetailedRouteData()
+        {
+            var routeViewModel = new RouteDataViewModel();
+            List<DropdwonListViewModel> dropdwonListViewModel = new();
+            // Populate RouteList
+            var x = _manageRoute.GetRoutListDrp();
+            x.ForEach(route =>
+            {
+                dropdwonListViewModel.Add(new DropdwonListViewModel
+                {
+                    DrpValue = route.Id,
+                    DrpText = route.Name
+                });
+            });
+            List<RouteDataModel> routeDataModel = new();
+            _manageRoute.GetDetailedRouteData().ForEach(route =>
+            {
+                routeDataModel.Add(new RouteDataModel
+                {
+                    RouteId = route.RouteId,
+                    RouteName = route.RouteName,
+                    Truck = route.Truck,
+                    LoadName = route.LoadName,
+                    LoadPickUpLocation = route.LoadPickUpLocation,
+                    LoadDestination = route.LoadDestination,
+                    LoadWeight = route.LoadWeight,
+                    TruckCapacity= route.TruckCapacity
+
+                });
+            });
+            routeViewModel.routeDataModels = routeDataModel;
+            routeViewModel.routelist = dropdwonListViewModel;
+            return View(routeViewModel);
+        }
+
+
     }
 }

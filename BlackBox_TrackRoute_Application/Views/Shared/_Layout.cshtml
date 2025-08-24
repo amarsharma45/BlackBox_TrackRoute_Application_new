@@ -166,7 +166,7 @@
             }
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link @(currentController == "PlanRoute" ? "active" : "")"
+                    <a class="nav-link @(currentAction == "RouteDetails" ? "active" : "")"
                        asp-controller="PlanRoute" asp-action="RouteDetails">Plan Route</a>
                 </li>
                 <li class="nav-item">
@@ -177,6 +177,12 @@
                     <a class="nav-link @(currentController == "ManageLoad" ? "active" : "")"
                        asp-controller="ManageLoad" asp-action="ManageLoad">Manage Load</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "RetrievalDetailedRouteData" ? "active" : "")"
+                       asp-controller="PlanRoute" asp-action="RetrievalDetailedRouteData">Data Retrieval</a>
+                </li>
+
+                
             </ul>
         </div>
 

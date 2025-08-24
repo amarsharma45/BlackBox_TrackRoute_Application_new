@@ -19,5 +19,7 @@ namespace TrackRoute_Application.Core.Interfaces
 
         public List<GetRoute_Load_MappingData_dto> GetRout_LoadsMapping_Data();
         public void AddRoute_LoadMapping(RouteLoadMapping_dto mappingData);
+
+        public List<RouteData_dto> GetDetailedRouteData();
     }
 }
